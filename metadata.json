@@ -1,0 +1,6 @@
+{
+  "name": "Salafi Scholar Chatbot",
+  "description": "An Islamic chatbot that provides answers strictly from the provided texts, adhering to the principles of RAG (Retrieval-Augmented Generation). It embodies the persona of a diligent student of knowledge.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

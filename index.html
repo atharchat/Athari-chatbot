@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>المحادثة السلفية</title>
+    <script src="https://cdn.tailwindcss.com/"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=El+Messiri:wght@400..700&family=Fustat:wght@200..800&family=Qahiri&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --bg-main: #F8F6F2; /* Page background - Linen white */
+        --bg-container: #F0EDE8; /* Main containers - Slightly darker beige */
+        --primary-accent: #614A3C; /* A darker, warmer brown from the logo */
+        --primary-accent-hover: #543F33; /* Darker brown for hover */
+        --secondary-accent: #E0DACE; /* Highlights, active states - Muted light taupe */
+        --bot-message-bg: #E9E3DC; /* Bot message bubble - Light greige (NOT white) */
+        --user-message-bg: #FFFFFF; /* User message bubble - Crisp white */
+        --text-primary: #4E443C; /* Main text - Dark warm brown */
+        --text-secondary: #92847A; /* Secondary text - Lighter muted brown */
+        --text-on-accent: #FFFFFF; /* Text on brown buttons */
+        --border-color: #E3DCD4; /* A subtle warm border */
+        --bg-hover: #E8E2DA; /* Hover for buttons, list items */
+        --destructive-color: #b71c1c;
+        --destructive-color-light-bg: #FFEBEE;
+        --destructive-color-dark-text: #B71C1C;
+        --shadow-sm: 0 2px 4px rgba(0,0,0,0.04);
+        --shadow-md: 0 4px 10px rgba(0,0,0,0.06);
+        --shadow-lg: 0 10px 20px rgba(0,0,0,0.08);
+      }
+
+      body {
+        font-family: 'El Messiri', 'Fustat', sans-serif;
+        background-image: url('https://i.ibb.co/JwtPgGth/Background.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: var(--text-primary);
+      }
+      
+      button, a {
+        transition: all 0.2s ease-in-out;
+      }
+
+      .chat-input-form {
+        background-color: var(--user-message-bg);
+        border: 1px solid var(--border-color);
+      }
+      .chat-input-form:focus-within {
+        border-color: var(--primary-accent);
+        box-shadow: 0 0 0 2px rgba(121, 85, 72, 0.2);
+      }
+
+      .topic-button {
+        background-color: var(--bg-container);
+        color: var(--text-primary);
+      }
+      
+      .topic-button:disabled {
+        color: #aaaaaa;
+      }
+
+      .topic-button:not(:disabled):hover {
+        background-color: var(--primary-accent);
+        color: var(--text-on-accent);
+        border-color: var(--primary-accent);
+      }
+      
+      .loading-dots span {
+        animation-name: blink;
+        animation-duration: 1.4s;
+        animation-iteration-count: infinite;
+        animation-fill-mode: both;
+        font-size: 1.5rem;
+        color: var(--primary-accent);
+      }
+
+      .loading-dots span:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      .loading-dots span:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      @keyframes blink {
+        0% {
+          opacity: 0.2;
+        }
+        20% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.2;
+        }
+      }
+
+      .source-citation {
+        font-style: italic;
+        color: var(--text-secondary);
+        border-top: 1px dashed var(--border-color);
+        text-align: right;
+      }
+
+      .source-citation-inline {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem; /* 8px */
+        margin-top: 0.5rem; /* 8px */
+        padding-right: 0.25rem; /* 4px */
+        font-style: italic;
+        font-family: 'Fustat', sans-serif;
+        font-size: 0.9em;
+        line-height: 1.4;
+        color: var(--text-secondary);
+        opacity: 0.95;
+      }
+
+      .source-citation-inline svg {
+        flex-shrink: 0;
+        color: var(--primary-accent);
+      }
+      
+      .loading-screen {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-image: url('https://i.ibb.co/JwtPgGth/Background.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        z-index: 100;
+      }
+
+      .loading-logo {
+        height: 10rem; /* 160px */
+        margin-bottom: 2rem; /* 32px */
+        animation: subtlePulse 2.5s infinite ease-in-out;
+      }
+
+      .loading-spinner {
+        width: 48px;
+        height: 48px;
+        border: 4px solid var(--primary-accent-hover);
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+      }
+
+      @keyframes rotation {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      @keyframes subtlePulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.03); }
+      }
+
+      @keyframes contentFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .app-container-visible {
+         animation: contentFadeIn 0.75s ease-out;
+      }
+
+      .content-transition {
+        animation: contentFadeIn 0.35s cubic-bezier(0.215, 0.61, 0.355, 1);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.17.0",
+    "vite": "https://aistudiocdn.com/vite@^7.1.5",
+    "path": "https://aistudiocdn.com/path@^0.12.7",
+    "url": "https://aistudiocdn.com/url@^0.11.4"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

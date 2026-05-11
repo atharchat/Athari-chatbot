@@ -1,0 +1,1 @@
+require('child_process').execSync('node sync.js', {stdio:'inherit'})
